@@ -4,25 +4,26 @@
 pkgbase=lirc
 pkgname=('lirc' 'lirc-utils')
 pkgver=0.9.0
-pkgrel=35
-epoch=1
-_extramodules=extramodules-3.6-aufs_friendly
+pkgrel=45
+epoch=2
+_extramodules=extramodules-3.8-ARCH
 arch=('i686' 'x86_64')
 url="http://www.lirc.org/"
 license=('GPL')
 ### NOTICE don't forget to bump version in depends in package_lirc
-makedepends=('help2man' 'linux-aufs_friendly-headers>=3.6' 'linux-aufs_friendly-headers<3.7' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
+makedepends=('help2man' 'linux-headers>=3.6' 'alsa-lib' 'libx11' 'libftdi' 'libirman' 'python2')
 options=('!makeflags' '!strip')
 source=(http://prdownloads.sourceforge.net/${pkgbase}/${pkgbase}-${pkgver}.tar.bz2
         lirc_wpc8769l.patch
         lircd-handle-large-config.patch
         lirc_atiusb-kfifo.patch
         kernel-2.6.39.patch
-	lircd lircmd lirc.logrotate lircd.conf irexec.conf irexecd
-	lirc.service lircm.service irexec.service
-	lirc.tmpfiles
-        lirc-0.9.0_ya_usbirv2.diff
-	)
+        lircd lircmd lirc.logrotate lircd.conf irexec.conf irexecd
+        lirc.service lircm.service irexec.service
+        lirc.tmpfiles
+        linux-3.8.patch
+        lirc-0.9.0_ya_usbirv3-3.diff.tar.gz
+       )
 
 build() {
   _kernver="$(cat /usr/lib/modules/${_extramodules}/version)"
@@ -31,7 +32,8 @@ build() {
   patch -Np1 -i "${srcdir}/lircd-handle-large-config.patch"
   patch -Np1 -i "${srcdir}/lirc_atiusb-kfifo.patch"
   patch -Np1 -i "${srcdir}/kernel-2.6.39.patch"
-  patch -Np1 -i "${srcdir}/lirc-0.9.0_ya_usbirv2.diff"
+  patch -Np1 -i "${srcdir}/linux-3.8.patch"
+  patch -Np1 -i "${srcdir}/lirc-0.9.0_ya_usbirv3-3.diff"
 
   sed -i '/AC_PATH_XTRA/d' configure.ac
   sed -i 's/AM_CONFIG_HEADER/AC_CONFIG_HEADER/' configure.ac
@@ -115,8 +117,9 @@ md5sums=('b232aef26f23fe33ea8305d276637086'
          '5b1f8c9cd788a39a6283f93302ce5c6e'
          'f0c0ac930326168035f0c8e24357ae55'
          '69d099e6deedfa3c1ee2b6e82d9b8bfb'
-         'dab8a73bcc5fd5479d8750493d8d97dc'
+         'a16f3528d12cc8a363cea7b237db05ec'
          'c2e20fe68b034df752dba2773db16ebe'
          '07131d117fcfe9dcd50c453c3a5e9531'
          'febf25c154a7d36f01159e84f26c2d9a'
-         'da96e1cccf354d0d9feab3764956cf75')
+         '9ee196bd03ea44af5a752fb0cc6ca96a'
+         '8f2b480b0392b35e7aff413dc491a228')
