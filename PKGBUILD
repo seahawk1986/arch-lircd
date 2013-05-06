@@ -59,7 +59,7 @@ build() {
 
 package_lirc() {
   pkgdesc="Linux Infrared Remote Control kernel modules for stock arch kernel"
-  depends=('lirc-utils' 'linux>=3.6' 'linux<3.7')
+  depends=('lirc-utils' 'linux>=3.6' 'linux<3.10')
   replaces=('lirc+pctv')
   install=lirc.install
 
